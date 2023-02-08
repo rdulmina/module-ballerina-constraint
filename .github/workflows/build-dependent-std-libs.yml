@@ -19,6 +19,10 @@ on:
                 description: Dependent Ballerina extended modules
                 required: false
                 default: "['rabbitmq', 'nats', 'kafka']"
+            additional_build_options:
+                description: Additional build options
+                required: false
+                default: ""
 
 jobs:
     build-ballerina-modules:
@@ -88,7 +92,7 @@ jobs:
                   packageUser: ${{ github.actor }}
                   packagePAT: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  ./gradlew clean build
+                  ./gradlew clean build ${{ inputs.additional_build_options }}
     build-ballerinax-modules:
         if: inputs.ballerinax_modules != ''
         name: Build Ballerina Extended Module
@@ -156,4 +160,4 @@ jobs:
                   packageUser: ${{ github.actor }}
                   packagePAT: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  ./gradlew clean build
+                  ./gradlew clean build ${{ inputs.additional_build_options }}
